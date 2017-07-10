@@ -31,6 +31,7 @@
                 col-md-10 col-md-offset-1
                 col-sm-10 col-sm-offset-1
                 col-xs-10 col-xs-offset-1">
+        {% block body %}
         <div class="left-panel">
             {% block left-panel %}
             <div class="bubble tsviewer">
@@ -47,9 +48,9 @@
             {% block content %}
             {% end %}
         </div>
+        {% end %}
     </div>
 </div>
-{% block body %}{% end %}
 <footer>
     <script src="{{ static_url('libs/jquery-dist/jquery.min.js') }}"></script>
     <script src="{{ static_url('libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>

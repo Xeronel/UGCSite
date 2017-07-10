@@ -81,6 +81,7 @@ body > header > div > div > img {
     border-radius: 4px;
     background-color: #f8f8f8;
     margin-bottom: 20px;
+    padding: 5px 15px 5px 15px;
 }
 
 .content {
@@ -88,10 +89,6 @@ body > header > div > div > img {
     padding-left: 10px;
     padding-right: 0;
     width: 75%;
-}
-
-.content .bubble {
-    padding: 5px 15px 5px 15px;
 }
 
 .content h4 {
