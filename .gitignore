@@ -1,0 +1,15 @@
+# IDE config
+.idea/
+
+# Btye-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env/
+.venv/
+
+# Project files
+libs/
+config.yaml

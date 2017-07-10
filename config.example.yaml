@@ -1,0 +1,17 @@
+web_server:
+    debug: False
+    autoreload: False
+    compiled_template_cache: True
+    static_path: "web/static"
+    template_path: "web/templates"
+    cookie_secret:
+        0: "cookiesecret"
+    key_version: 0
+
+database:
+    username: "username"
+    password: "password"
+    database: "postgres"
+    hostname: "localhost"
+    port: 5432
+    size: 1
