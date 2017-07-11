@@ -4,6 +4,8 @@ import config
 from tornado import gen
 from datetime import date, datetime
 from decimal import Decimal
+from .permission import PermissionQuery
+from .user import UserQuery
 
 
 class Database:
@@ -15,6 +17,8 @@ class Database:
                                 max_size=config.db.max_size,
                                 auto_shrink=config.db.auto_shrink,
                                 ioloop=ioloop)
+        self.permission = PermissionQuery(self)
+        self.user = UserQuery(self)
 
     def connect(self):
         return self.pool.connect()
@@ -29,11 +33,11 @@ class Database:
             cursor = yield self.pool.execute(*args, **kwargs)
         return cursor
 
-    def parse_query(self, data, description, convert_decimal=True):
+    def parse_result(self, data, description, convert_decimal=True):
         if type(data) == list:
             result = []
             for value in data:
-                result.append(self.parse_query(value, description))
+                result.append(self.parse_result(value, description))
         elif type(data) == tuple:
             result = {}
             for i in range(len(description)):
