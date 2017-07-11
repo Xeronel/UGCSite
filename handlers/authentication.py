@@ -1,6 +1,6 @@
 from .base import BaseHandler
 from tornado.web import MissingArgumentError
-from tornado import gen, web
+from tornado import gen
 import psycopg2
 
 
