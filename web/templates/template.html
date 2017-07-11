@@ -9,55 +9,59 @@
 </head>
 <body>
 <header>
-    <div class="row">
-        <div class="header
-                    col-lg-8 col-lg-offset-2
-                    col-md-10 col-md-offset-1
-                    col-sm-10 col-sm-offset-1
-                    col-xs-10 col-xs-offset-1">
-            <img src="{{ static_url('img/banner.png') }}">
-            <nav class="navbar navbar-default">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Home</a></li>
-                    <li><a href="#">Members</a></li>
-                    <li><a href="#">About Us</a></li>
-                </ul>
-            </nav>
-        </div>
+    <div class="header">
+        <img src="{{ static_url('img/banner.png') }}">
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav">
+                <li id="nav-home"><a href="/">Home</a></li>
+                <li id="nav-members"><a href="#">Members</a></li>
+                <li id="nav-about-us"><a href="#">About Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                {% if not current_user %}
+                <li id="nav-login"><a href="/login">Login</a></li>
+                {% else %}
+                <li id="nav-logout"><a href="/logout">Logout</a></li>
+                {% end %}
+            </ul>
+        </nav>
     </div>
 </header>
-<div class="row">
-    <div class="col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                col-sm-10 col-sm-offset-1
-                col-xs-10 col-xs-offset-1">
-        {% block body %}
-        <div class="left-panel">
-            {% block left-panel %}
-            <div class="bubble tsviewer">
-                <div id="ts3viewer_1101309" style=""></div>
-            </div>
-            <div class="bubble csgo">
-                <iframe id="status-frame" src="//cache.gametracker.com/components/html0/?host=149.56.147.177:27015&bgColor=F8F8F8&fontColor=333333&titleBgColor=FFFFFF&titleColor=000000&borderColor=f8f8f8&linkColor=091858&borderLinkColor=5C5C5C&showMap=0&currentPlayersHeight=100&showCurrPlayers=1&topPlayersHeight=100&showTopPlayers=1&showBlogs=0&width=160"
-                        frameborder="0" scrolling="no" width="160" height="412"></iframe>
-                <a id="status-image" href="//www.gametracker.com/server_info/149.56.147.177:27015/" target="_blank"><img src="//cache.gametracker.com/server_info/149.56.147.177:27015/b_560_95_1.png" border="0" width="560" height="95" alt=""/></a>
-            </div>
-            {% end %}
+<div class="body">
+    {% block body %}
+    <div class="left-panel">
+        {% block left-panel %}
+        <div class="bubble tsviewer">
+            <div id="ts3viewer_1101309" style=""></div>
+            <script src="//static.tsviewer.com/short_expire/js/ts3viewer_loader.js"></script>
+            <script>
+                var ts3v_url_1 = "https://www.tsviewer.com/ts3viewer.php?ID=1101309&text=000000&text_size=12&text_family=1&text_s_color=000000&text_s_weight=normal&text_s_style=normal&text_s_variant=normal&text_s_decoration=none&text_i_color=&text_i_weight=normal&text_i_style=normal&text_i_variant=normal&text_i_decoration=none&text_c_color=&text_c_weight=normal&text_c_style=normal&text_c_variant=normal&text_c_decoration=none&text_u_color=000000&text_u_weight=normal&text_u_style=normal&text_u_variant=normal&text_u_decoration=none&text_s_color_h=&text_s_weight_h=bold&text_s_style_h=normal&text_s_variant_h=normal&text_s_decoration_h=none&text_i_color_h=000000&text_i_weight_h=bold&text_i_style_h=normal&text_i_variant_h=normal&text_i_decoration_h=none&text_c_color_h=&text_c_weight_h=normal&text_c_style_h=normal&text_c_variant_h=normal&text_c_decoration_h=none&text_u_color_h=&text_u_weight_h=bold&text_u_style_h=normal&text_u_variant_h=normal&text_u_decoration_h=none&flags=0&hideEmptyChannels&iconset=default_colored_2014";
+                ts3v_display.init(ts3v_url_1, 1101309, 100);
+            </script>
         </div>
-        <div class="content">
-            {% block content %}
-            {% end %}
+        <div class="bubble csgo">
+            <iframe id="status-frame"
+                    src="//cache.gametracker.com/components/html0/?host=149.56.147.177:27015&bgColor=FFFFFF&fontColor=333333&titleBgColor=FFFFFF&titleColor=000000&borderColor=f8f8f8&linkColor=091858&borderLinkColor=5C5C5C&showMap=0&currentPlayersHeight=100&showCurrPlayers=1&topPlayersHeight=100&showTopPlayers=1&showBlogs=0&width=160"
+                    frameborder="0" scrolling="no" width="160" height="412"></iframe>
+            <a id="status-image" href="//www.gametracker.com/server_info/149.56.147.177:27015/" target="_blank"><img
+                    src="//cache.gametracker.com/server_info/149.56.147.177:27015/b_560_95_1.png" border="0"
+                    width="560" height="95" alt=""/></a>
         </div>
         {% end %}
     </div>
+    <div class="content">
+        {% block content %}
+        {% end %}
+    </div>
+    {% end %}
 </div>
 <footer>
     <script src="{{ static_url('libs/jquery-dist/jquery.min.js') }}"></script>
     <script src="{{ static_url('libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="//static.tsviewer.com/short_expire/js/ts3viewer_loader.js"></script>
+    <script src="{{ static_url('js/ugc.js') }}"></script>
+    <script src="{{ static_url('js/' + template + '.js') }}"></script>
     <script>
-        var ts3v_url_1 = "https://www.tsviewer.com/ts3viewer.php?ID=1101309&text=000000&text_size=12&text_family=1&text_s_color=000000&text_s_weight=normal&text_s_style=normal&text_s_variant=normal&text_s_decoration=none&text_i_color=&text_i_weight=normal&text_i_style=normal&text_i_variant=normal&text_i_decoration=none&text_c_color=&text_c_weight=normal&text_c_style=normal&text_c_variant=normal&text_c_decoration=none&text_u_color=000000&text_u_weight=normal&text_u_style=normal&text_u_variant=normal&text_u_decoration=none&text_s_color_h=&text_s_weight_h=bold&text_s_style_h=normal&text_s_variant_h=normal&text_s_decoration_h=none&text_i_color_h=000000&text_i_weight_h=bold&text_i_style_h=normal&text_i_variant_h=normal&text_i_decoration_h=none&text_c_color_h=&text_c_weight_h=normal&text_c_style_h=normal&text_c_variant_h=normal&text_c_decoration_h=none&text_u_color_h=&text_u_weight_h=bold&text_u_style_h=normal&text_u_variant_h=normal&text_u_decoration_h=none&flags=0&hideEmptyChannels&iconset=default_colored_2014";
-        ts3v_display.init(ts3v_url_1, 1101309, 100);
+        ugc.navSelector('#{% block nav %}{% end %}');
     </script>
     {% block includes %}{% end %}
 </footer>

@@ -1,0 +1,31 @@
+{% extends "template.html" %}
+
+{% block body %}
+<div class="bubble">
+    <h4>Add User</h4>
+    <form>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input name="username" class="form-control" id="username" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+            <label for="display-name">Display name:</label>
+            <input name="display-name" class="form-control" id="display-name"
+                   placeholder="Name to show other users">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address:</label>
+            <input name="email" class="form-control" id="email" placeholder="Name to show other users">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input name="password" class="form-control" id="password" placeholder="Name to show other users">
+        </div>
+        <div class="form-group">
+            <label for="verify-password">Verify password:</label>
+            <input name="verify-password" class="form-control" id="verify-password"
+                   placeholder="Name to show other users">
+        </div>
+    </form>
+</div>
+{% end %}

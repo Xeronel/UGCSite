@@ -1,20 +1,18 @@
 body {
-    background-image: url("/static/img/background.png");
-    overflow-x: hidden;
+    background: url("/static/img/background.jpg") repeat;
 }
-
-/* Site header container */
-body > div.row > div, .header {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-body > header > div > div {
+.header, .body {
+    max-width: 1240px;
     margin: 0 auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.alert {
+    display: none;
 }
 
 /* Site banner */
-body > header > div > div > img {
+.header > img {
     width: 100%;
     display: block;
     margin: 0 auto;
@@ -23,6 +21,11 @@ body > header > div > div > img {
 /* Navbar */
 .navbar {
     border-radius: 0 0 4px 4px;
+    min-height: unset;
+}
+
+.navbar-nav {
+    margin: 0 0;
 }
 
 .navbar-collapse.collapse {
@@ -30,7 +33,7 @@ body > header > div > div > img {
 }
 
 .navbar-nav > li, .navbar-nav {
-    float: left !important;
+    float: left;
 }
 
 .navbar-nav.navbar-right:last-child {
