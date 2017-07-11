@@ -32,6 +32,29 @@
     <div class="left-panel">
         {% block left-panel %}
         {% block left-panel-top %}{% end %}
+        {% if current_user %}
+        <div class="bubble">
+            <h4>Welcome {{ user.display_name }}!</h4>
+            {% block left-panel-user %}{% end %}
+            <div class="list-group">
+                {% if user.permissions.create_user %}
+                <a href="/create_user" id="item-create-user" class="list-group-item">Create User</a>
+                <a href="/modify_user" id="item-create-user" class="list-group-item">Create User</a>
+                {% end %}
+                {% if user.permissions.create_group %}
+                <a href="#" id="item-create-group" class="list-group-item">Create Group</a>
+                {% end %}
+                {% if user.permissions.ts3_panel %}
+                <a href="#" id="item-ts3-panel" class="list-group-item">TeamSpeak cPanel</a>
+                {% end %}
+                {% if user.permissions.csgo_panel %}
+                <a href="#" id="item-csgo-panel" class="list-group-item">CS:GO cPanel</a>
+                {% end %}
+                <a href="/profile" id="update-profile" class="list-group-item">Update Profile</a>
+            </div>
+        </div>
+        {% end %}
+
         <div class="bubble tsviewer">
             <div id="ts3viewer_1101309" style=""></div>
             <script src="//static.tsviewer.com/short_expire/js/ts3viewer_loader.js"></script>

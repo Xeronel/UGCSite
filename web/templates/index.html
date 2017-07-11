@@ -8,9 +8,20 @@
         Welcome to Unreal Gaming Community!
     </h4>
     <p>
-        We are a community that spans multiple games and more in the future.<br>
-        Check us out on TeamSpeak or our CS:GO server.
-        <!--Guests click here to apply to .uGC^ Unreal Gaming Community. CHEERS!-->
+        Hi, And welcome to the uGC^ Unreal gaming community. We are delighted to officially announce the launch of our
+        website. Our goal with this new site is to provide all gamers alike with ways to communicate, learn, share, and
+        post their gaming experiences with one another. Currently we have a 500 slot TeamSpeak server and 2 CSGO
+        servers! So stop by and chat or hop on to play a few rounds by clicking the server info on the left side of the
+        page. Don't forget to check out the forums for various gaming discussions.
     </p>
 </div>
+{% end %}
+
+{% block left-panel-user %}
+{% if user.permissions.create_post %}
+<div class="list-group">
+    <a href="#" id="item-create-post" class="list-group-item">Create Post</a>
+</div>
+<hr>
+{% end %}
 {% end %}
