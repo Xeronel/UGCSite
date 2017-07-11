@@ -31,6 +31,7 @@
     {% block body %}
     <div class="left-panel">
         {% block left-panel %}
+        {% block left-panel-top %}{% end %}
         <div class="bubble tsviewer">
             <div id="ts3viewer_1101309" style=""></div>
             <script src="//static.tsviewer.com/short_expire/js/ts3viewer_loader.js"></script>
@@ -47,6 +48,7 @@
                     src="//cache.gametracker.com/server_info/149.56.147.177:27015/b_560_95_1.png" border="0"
                     width="560" height="95" alt=""/></a>
         </div>
+        {% block left-panel-bottom %}{% end %}
         {% end %}
     </div>
     <div class="content">
