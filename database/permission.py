@@ -20,6 +20,8 @@ class PermissionQuery(Query):
             SELECT
                 p.user_id AS user_id,
                 bool_or(g.create_post) AS create_post,
+                bool_or(g.create_user) AS create_user,
+                bool_or(g.create_group) AS create_group,
                 bool_or(g.ts3_panel) AS ts3_panel,
                 bool_or(g.csgo_panel) AS csgo_panel
             FROM
