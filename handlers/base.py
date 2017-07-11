@@ -1,18 +1,8 @@
-import tornado.web
-from tornado import gen
+from tornado import gen, web
 from tornado.escape import json_decode
 
 
-class User:
-    def __init__(self, uid, first_name, last_name, email, permissions):
-        self.uid = uid
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.permissions = permissions
-
-
-class BaseHandler(tornado.web.RequestHandler):
+class BaseHandler(web.RequestHandler):
     def __init__(self, application, request, **kwargs):
         super(BaseHandler, self).__init__(application, request, **kwargs)
         self.json_args = {}
@@ -26,30 +16,15 @@ class BaseHandler(tornado.web.RequestHandler):
             return username.decode('utf-8') if type(username) == bytes else username
 
     @gen.coroutine
-    @tornado.web.authenticated
     def get_user(self):
+        """
+        Get information about the current user
+        :return: User object
+        """
         uid = self.get_secure_cookie('uid')
         uid = uid.decode('utf-8') if type(uid) == bytes else uid
-        cursor = yield self.db.execute("SELECT id, username, display_name, email FROM users "
-                                       "WHERE (id = %(uid)s);", {'uid': uid})
-        uid, first_name, last_name, email = cursor.fetchone()
-        # permissions = yield self.get_permissions()
-        raise gen.Return(User(uid, first_name, last_name, email, None))
-
-    @gen.coroutine
-    @tornado.web.authenticated
-    def get_permissions(self):
-        cursor = yield self.db.execute(
-            "SELECT * FROM permissions "
-            "INNER JOIN users ON permissions.user = user.id "
-            "WHERE employee.username = %(username)s;",
-            {'username': self.current_user}
-        )
-        permissions = cursor.fetchone()
-        results = {}
-        for i in range(len(cursor.description)):
-            results[cursor.description[i].name] = permissions[i]
-        return results
+        user = yield self.db.user.get(uid)
+        return user
 
     @property
     def db(self):
@@ -65,14 +40,11 @@ class BaseHandler(tornado.web.RequestHandler):
         return result
 
     @gen.coroutine
-    def render(self, template_name, get_user=True, **kwargs):
+    def render(self, template_name, **kwargs):
         ext = template_name.rfind('.')
         kwargs['template'] = template_name[:ext] if ext > 0 else template_name
-        if get_user:
-            if 'user' not in kwargs:
-                kwargs['user'] = yield self.get_user()
-            elif kwargs['user'] is None:
-                kwargs['user'] = yield self.get_user()
-            super(BaseHandler, self).render(template_name, **kwargs)
-        else:
-            super(BaseHandler, self).render(template_name, **kwargs)
+        if 'user' not in kwargs:
+            kwargs['user'] = yield self.get_user()
+        elif kwargs['user'] is None:
+            kwargs['user'] = yield self.get_user()
+        super(BaseHandler, self).render(template_name, **kwargs)

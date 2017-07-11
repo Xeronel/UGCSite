@@ -1,7 +1,6 @@
 from .base import BaseHandler
 from tornado.web import MissingArgumentError
 from tornado import gen
-import psycopg2
 
 
 class Login(BaseHandler):
@@ -10,28 +9,21 @@ class Login(BaseHandler):
         if self.get_current_user():
             self.redirect('/')
         else:
-            yield self.render('login.html', get_user=False)
+            yield self.render('login.html')
 
     @gen.coroutine
     def post(self):
         try:
-            cursor = yield self.db.execute(
-                """
-                SELECT id, username, display_name, email
-                FROM users WHERE pwhash = crypt(%(passwd)s, pwhash) AND username = %(username)s;
-                """,
-                {'username': self.get_argument('username'),
-                 'passwd': self.get_argument('password')})
-            rows = cursor.fetchall()
-            if len(rows) < 1:
-                self.login_failed()
-            else:
-                uid, username, display_name, email = rows[0]
+            user = yield self.db.user.login(self.get_argument('username'),
+                                            self.get_argument('password'))
+            if user:
                 next_page = self.get_argument('next', '/')
-                self.set_secure_cookie('uid', str(uid))
-                self.set_secure_cookie("username", username)
+                self.set_secure_cookie('uid', user.uid)
+                self.set_secure_cookie("username", user.username)
                 self.redirect(next_page)
-        except (MissingArgumentError, psycopg2.ProgrammingError):
+            else:
+                self.login_failed()
+        except MissingArgumentError:
             self.login_failed()
 
     def login_failed(self):
