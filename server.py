@@ -3,6 +3,7 @@ from tornado import web
 from config import web as config
 from database import Database
 from handlers import *
+import ui
 
 
 def make_app():
@@ -18,7 +19,8 @@ def make_app():
         login_url='/login',
         cookie_secret=config.cookie_secret,
         key_version=config.key_version,
-        xsrf_cookies=True)
+        xsrf_cookies=True,
+        ui_modules=ui)
 
 
 if __name__ == '__main__':

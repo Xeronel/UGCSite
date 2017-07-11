@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+
+{% block nav %}nav-login{% end %}
+{% block content %}
+<div class="bubble clearfix">
+    <h4>Login</h4>
+    {% module Alert() %}
+    <form id="login-form">
+        {% module xsrf_form_html() %}
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input class="form-control" name="username" id="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input class="form-control" name="password" id="password" type="password">
+        </div>
+        <button class="btn btn-default pull-right clearfix" type="submit">Login</button>
+    </form>
+</div>
+{% end %}

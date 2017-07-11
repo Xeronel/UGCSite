@@ -33,8 +33,8 @@ class BaseHandler(tornado.web.RequestHandler):
         cursor = yield self.db.execute("SELECT id, username, display_name, email FROM users "
                                        "WHERE (id = %(uid)s);", {'uid': uid})
         uid, first_name, last_name, email = cursor.fetchone()
-        permissions = yield self.get_permissions()
-        raise gen.Return(User(uid, first_name, last_name, email, permissions))
+        # permissions = yield self.get_permissions()
+        raise gen.Return(User(uid, first_name, last_name, email, None))
 
     @gen.coroutine
     @tornado.web.authenticated
@@ -66,6 +66,8 @@ class BaseHandler(tornado.web.RequestHandler):
 
     @gen.coroutine
     def render(self, template_name, get_user=True, **kwargs):
+        ext = template_name.rfind('.')
+        kwargs['template'] = template_name[:ext] if ext > 0 else template_name
         if get_user:
             if 'user' not in kwargs:
                 kwargs['user'] = yield self.get_user()

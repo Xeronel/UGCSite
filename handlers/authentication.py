@@ -1,6 +1,7 @@
 from .base import BaseHandler
 from tornado.web import MissingArgumentError
-from tornado import gen
+from tornado import gen, web
+import psycopg2
 
 
 class Login(BaseHandler):
@@ -15,23 +16,29 @@ class Login(BaseHandler):
     def post(self):
         try:
             cursor = yield self.db.execute(
-                "select id, username, display_name, email "
-                "from users where pwhash = crypt(%(passwd)s, pwhash) and username = %(username)s;",
+                """
+                SELECT id, username, display_name, email
+                FROM users WHERE pwhash = crypt(%(passwd)s, pwhash) AND username = %(username)s;
+                """,
                 {'username': self.get_argument('username'),
                  'passwd': self.get_argument('password')})
-        except MissingArgumentError:
-            self.send_error(401)
-            return
+            rows = cursor.fetchall()
+            if len(rows) < 1:
+                self.login_failed()
+            else:
+                uid, username, display_name, email = rows[0]
+                next_page = self.get_argument('next', '/')
+                self.set_secure_cookie('uid', str(uid))
+                self.set_secure_cookie("username", username)
+                self.redirect(next_page)
+        except (MissingArgumentError, psycopg2.ProgrammingError):
+            self.login_failed()
 
-        rows = cursor.fetchall()
-        if len(rows) < 1:
-            self.send_error(401)
-        else:
-            uid, username, first_name, last_name, email = rows[0]
-            next_page = self.get_argument('next', '/dashboard')
-            self.set_secure_cookie('uid', str(uid))
-            self.set_secure_cookie("username", username)
-            self.redirect(next_page)
+    def login_failed(self):
+        self.clear()
+        self.set_status(401)
+        self.write('Username or password is incorrect.')
+        self.flush()
 
 
 class Logout(BaseHandler):
