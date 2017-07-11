@@ -40,11 +40,29 @@ class BaseHandler(web.RequestHandler):
         return result
 
     @gen.coroutine
-    def render(self, template_name, **kwargs):
+    def render(self, template_name, permissions=None, **kwargs):
         ext = template_name.rfind('.')
         kwargs['template'] = template_name[:ext] if ext > 0 else template_name
+
         if 'user' not in kwargs:
             kwargs['user'] = yield self.get_user()
         elif kwargs['user'] is None:
             kwargs['user'] = yield self.get_user()
-        super(BaseHandler, self).render(template_name, **kwargs)
+
+        if permissions:
+            if type(permissions) == str:
+                permission = getattr(kwargs['user'].permissions, permissions, False)
+            elif type(permissions) == list:
+                permission = True
+                for p in permissions:
+                    if not getattr(kwargs['user'].permissions, p, False):
+                        permission = False
+            else:
+                raise ValueError("Permissions must be a list of string")
+        else:
+            permission = True
+
+        if permission:
+            super(BaseHandler, self).render(template_name, **kwargs)
+        else:
+            self.send_error(401)
