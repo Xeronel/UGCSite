@@ -5,7 +5,7 @@
 <div class="bubble clearfix">
     <h4>Login</h4>
     {% module Alert() %}
-    <form id="login-form">
+    <form id="login-form" method="post">
         {% module xsrf_form_html() %}
         <div class="form-group">
             <label for="username">Username:</label>
