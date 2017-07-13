@@ -27,10 +27,7 @@ class Login(BaseHandler):
             self.login_failed()
 
     def login_failed(self):
-        self.clear()
-        self.set_status(401)
-        self.write('Username or password is incorrect.')
-        self.flush()
+        self.error(401, 'Username or password is incorrect.')
 
 
 class Logout(BaseHandler):
