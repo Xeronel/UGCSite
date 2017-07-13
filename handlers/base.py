@@ -39,6 +39,12 @@ class BaseHandler(web.RequestHandler):
             raise tornado.web.MissingArgumentError
         return result
 
+    def error(self, status_code, message):
+        self.clear()
+        self.set_status(status_code)
+        self.write(message)
+        self.flush()
+
     @gen.coroutine
     def render(self, template_name, permissions=None, **kwargs):
         ext = template_name.rfind('.')
