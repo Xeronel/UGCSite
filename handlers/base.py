@@ -80,20 +80,4 @@ class BaseHandler(web.RequestHandler):
         elif kwargs['user'] is None:
             kwargs['user'] = yield self.get_user()
 
-        if permissions:
-            if type(permissions) == str:
-                permission = getattr(kwargs['user'].permissions, permissions, False)
-            elif type(permissions) == list:
-                permission = True
-                for p in permissions:
-                    if not getattr(kwargs['user'].permissions, p, False):
-                        permission = False
-            else:
-                raise ValueError("Permissions must be a list or string")
-        else:
-            permission = True
-
-        if permission:
-            super(BaseHandler, self).render(template_name, **kwargs)
-        else:
-            self.send_error(401)
+        super(BaseHandler, self).render(template_name, **kwargs)
