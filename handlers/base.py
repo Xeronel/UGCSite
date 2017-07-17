@@ -2,6 +2,31 @@ from tornado import gen, web
 from tornado.escape import json_decode
 
 
+def permissions(perms):
+    def decorator(func):
+        @gen.coroutine
+        def wrapper(self, *args, **kwargs):
+            if 'user' not in kwargs:
+                kwargs['user'] = yield self.get_user()
+            elif kwargs['user'] is None:
+                kwargs['user'] = yield self.get_user()
+            user = kwargs['user']
+
+            # Check permissions
+            for p in perms:
+                # If any of the required permissions is false deny access
+                if getattr(user.permissions, p, False) is False:
+                    self.send_error(401)
+                    return
+
+            # Call original function
+            yield func(self, *args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
 class BaseHandler(web.RequestHandler):
     def __init__(self, application, request, **kwargs):
         super(BaseHandler, self).__init__(application, request, **kwargs)
@@ -64,7 +89,7 @@ class BaseHandler(web.RequestHandler):
                     if not getattr(kwargs['user'].permissions, p, False):
                         permission = False
             else:
-                raise ValueError("Permissions must be a list of string")
+                raise ValueError("Permissions must be a list or string")
         else:
             permission = True
 
