@@ -37,9 +37,12 @@
             <h4>Welcome {{ user.display_name }}!</h4>
             {% block left-panel-user %}{% end %}
             <div class="list-group">
+                {% if user.permissions.create_post %}
+                <a href="/create_post" id="item-create-post" class="list-group-item">Create Post</a>
+                {% end %}
                 {% if user.permissions.create_user %}
                 <a href="/create_user" id="item-create-user" class="list-group-item">Create User</a>
-                <a href="/modify_user" id="item-create-user" class="list-group-item">Modify User</a>
+                <a href="/modify_user" id="item-modify-user" class="list-group-item">Modify User</a>
                 {% end %}
                 {% if user.permissions.create_group %}
                 <a href="#" id="item-create-group" class="list-group-item">Create Group</a>
