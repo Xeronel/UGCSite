@@ -8,7 +8,7 @@ $(function () {
             type: 'POST',
             data: loginForm.serialize(),
             error: function (data) {
-                ugc.alert.danger(loginForm, data);
+                ugc.alert.danger(loginForm, data.responseText);
             },
             success: function () {
                 document.location.reload();
