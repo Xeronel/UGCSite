@@ -6,11 +6,7 @@ def permissions(perms):
     def decorator(func):
         @gen.coroutine
         def wrapper(self, *args, **kwargs):
-            if 'user' not in kwargs:
-                kwargs['user'] = yield self.get_user()
-            elif kwargs['user'] is None:
-                kwargs['user'] = yield self.get_user()
-            user = kwargs['user']
+            user = yield self.get_user()
 
             # Check permissions
             for p in perms:
