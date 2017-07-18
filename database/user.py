@@ -66,3 +66,22 @@ class UserQuery(Query):
                 return User(u, p)
         except psycopg2.ProgrammingError:
             return False
+
+    @gen.coroutine
+    def create(self, username: str, display_name: str, email: str, password: str):
+        """
+        Create a user
+        :param username: Username to be created
+        :param display_name: How the user will be displayed on the site
+        :param email: Email address
+        :param password: Password used for authenticating the user
+        :return: New user's ID
+        """
+        c = yield self.execute("""
+        INSERT INTO
+            users (username, display_name, email, pwhash)
+        VALUES
+            (%s, %s, %s, crypt(%s, gen_salt('bf')))
+        RETURNING id;
+        """, [username, display_name, email, password])
+        return c.fetchone()[0]

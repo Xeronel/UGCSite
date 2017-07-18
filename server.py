@@ -10,7 +10,8 @@ def make_app():
     return web.Application(
         [(r'/', Home),
          (r'/login', Login),
-         (r'/logout', Logout)],
+         (r'/logout', Logout),
+         (r'/create_user', CreateUser)],
         debug=config.debug,
         autoreload=config.autoreload,
         compiled_template_cache=config.compiled_template_cache,
