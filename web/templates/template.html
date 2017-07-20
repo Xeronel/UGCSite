@@ -6,6 +6,7 @@
     <title>{% block title %}uGC^ Unreal Gaming Community{% end %}</title>
     <link rel="stylesheet" type="text/css" href="{{ static_url('libs/bootstrap/dist/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ static_url('style.css') }}">
+    {% block head %}{% end %}
 </head>
 <body>
 <header>
@@ -37,9 +38,6 @@
             <h4>Welcome {{ user.display_name }}!</h4>
             {% block left-panel-user %}{% end %}
             <div class="list-group">
-                {% if user.permissions.create_post %}
-                <a href="/create_post" id="item-create-post" class="list-group-item">Create Post</a>
-                {% end %}
                 {% if user.permissions.create_user %}
                 <a href="/create_user" id="item-create-user" class="list-group-item">Create User</a>
                 <a href="/modify_user" id="item-modify-user" class="list-group-item">Modify User</a>
