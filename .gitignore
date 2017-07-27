@@ -13,3 +13,4 @@ __pycache__/
 # Project files
 libs/
 config.yaml
+uploads/
