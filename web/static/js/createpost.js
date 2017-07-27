@@ -2,7 +2,7 @@ tinymce.init({
     plugins: 'image imagetools paste media',
     paste_as_text: true,
     selector: 'textarea',
-    menubar: false,
+    menubar: true,
     skin: 'light',
     forced_root_block: false,
     theme_advanced_resizing: true,
