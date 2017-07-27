@@ -131,6 +131,16 @@ h4 {
     margin: 0;
 }
 
+.post-footer {
+    margin-top: 10px;
+}
+
+.post-footer a {
+    display: block;
+    font-size: 0.9em;
+    text-align: right;
+}
+
 @media screen and (max-width: 768px) {
     .left-panel {
         width: 100%;

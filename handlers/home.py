@@ -5,4 +5,5 @@ from tornado import gen
 class Home(BaseHandler):
     @gen.coroutine
     def get(self):
-        yield self.render('index.html')
+        posts = yield self.db.post.get()
+        yield self.render('index.html', posts=posts)

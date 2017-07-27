@@ -3,18 +3,20 @@
 {% block nav %}#nav-home{% end %}
 
 {% block content %}
-<div class="bubble">
+{% for post in posts %}
+<div class="bubble clearfix">
     <h4>
-        Welcome to Unreal Gaming Community!
+        {{ post.title }}
     </h4>
-    <p>
-        Hi, And welcome to the uGC^ Unreal gaming community. We are delighted to officially announce the launch of our
-        website. Our goal with this new site is to provide all gamers alike with ways to communicate, learn, share, and
-        post their gaming experiences with one another. Currently we have a 500 slot TeamSpeak server and 2 CSGO
-        servers! So stop by and chat or hop on to play a few rounds by clicking the server info on the left side of the
-        page. Don't forget to check out the forums for various gaming discussions.
-    </p>
+    <p>{% raw post.body %}</p>
+    <div class="post-footer">
+        <div class="pull-right">
+            <a href="#" onclick="delete_post({{ post.id }})">Delete Post</a>
+            <span>{{ 'By %s, %s' % (post.username.title(), post.created_on.strftime('%Y-%m-%d')) }} </span>
+        </div>
+    </div>
 </div>
+{% end %}
 {% end %}
 
 {% block left-panel-user %}

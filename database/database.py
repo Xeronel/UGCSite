@@ -6,6 +6,7 @@ from datetime import date, datetime
 from decimal import Decimal
 from .permission import PermissionQuery
 from .user import UserQuery
+from .post import PostQuery
 
 
 class Database:
@@ -19,6 +20,7 @@ class Database:
                                 ioloop=ioloop)
         self.permission = PermissionQuery(self)
         self.user = UserQuery(self)
+        self.post = PostQuery(self)
 
     def connect(self):
         return self.pool.connect()
@@ -33,15 +35,18 @@ class Database:
             cursor = yield self.pool.execute(*args, **kwargs)
         return cursor
 
-    def parse_result(self, data, description, convert_decimal=True):
+    def parse_result(self, data, description, convert_decimal=True, convert_date=True, cls=None):
         if type(data) == list:
             result = []
             for value in data:
-                result.append(self.parse_result(value, description))
+                if cls is not None:
+                    result.append(cls(self.parse_result(value, description, convert_decimal, convert_date, cls)))
+                else:
+                    result.append(self.parse_result(value, description, convert_decimal, convert_date, cls))
         elif type(data) == tuple:
             result = {}
             for i in range(len(description)):
-                if type(data[i]) == date or type(data[i]) == datetime:
+                if type(data[i]) == date or type(data[i]) == datetime and convert_date:
                     value = data[i].strftime('%Y-%m-%d')
                 elif type(data[i]) == Decimal and convert_decimal:
                     value = str(data[i])

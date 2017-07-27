@@ -36,6 +36,11 @@ class BaseHandler(web.RequestHandler):
         else:
             return username.decode('utf-8') if type(username) == bytes else username
 
+    def get_current_user_id(self):
+        uid = self.get_secure_cookie('uid')
+        uid = uid.decode('utf-8') if type(uid) == bytes else uid
+        return uid
+
     @gen.coroutine
     def get_user(self):
         """
@@ -67,7 +72,7 @@ class BaseHandler(web.RequestHandler):
         self.flush()
 
     @gen.coroutine
-    def render(self, template_name, permissions=None, **kwargs):
+    def render(self, template_name, **kwargs):
         ext = template_name.rfind('.')
         kwargs['template'] = template_name[:ext] if ext > 0 else template_name
 
