@@ -1,5 +1,5 @@
 tinymce.init({
-    plugins: 'image imagetools paste',
+    plugins: 'image imagetools paste media',
     paste_as_text: true,
     selector: 'textarea',
     menubar: false,
@@ -9,7 +9,7 @@ tinymce.init({
     theme_advanced_resize_horizontal: false,
     theme_advanced_statusbar_location: 'bottom',
     toolbar: 'undo,redo,bold,italic,alignleft,aligncenter,' +
-    'alignright,alignjustify,bullist,numlist,outdent,indent,image',
+    'alignright,alignjustify,bullist,numlist,outdent,indent,image,media',
     setup: function (ed) {
         ed.on('change', function () {
             tinymce.triggerSave();
