@@ -3,7 +3,10 @@ function ugc() {
 
 ugc.navSelector = function (element) {
     $('.header > nav > ul > li.active').removeClass('active');
-    $(element).addClass('active');
+    var e = $(element);
+    if (e) {
+        e.addClass('active');
+    }
 };
 
 ugc.alert = function (element, message, type) {
