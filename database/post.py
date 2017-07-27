@@ -6,9 +6,9 @@ from datetime import date, datetime
 class Post:
     def __init__(self, post: dict):
         self.id = post['id']
-        self.username = str(post['username'])
         self.title = str(post['title'])
         self.body = str(post['body'])
+        self.created_by = str(post['created_by'])
         created_on = post['created_on']
         if type(created_on) == date or type(created_on) == datetime:
             self.created_on = created_on
@@ -25,7 +25,7 @@ class PostQuery(Query):
     def get(self):
         posts = yield self.execute("""
         SELECT
-            u.username, p.title, p.body, p.created_on, p.id
+            u.display_name as created_by, p.title, p.body, p.created_on, p.id
         FROM
             posts p
         LEFT JOIN
