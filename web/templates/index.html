@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 
-{% block nav %}nav-home{% end %}
+{% block nav %}#nav-home{% end %}
 
 {% block content %}
 <div class="bubble">
@@ -20,7 +20,7 @@
 {% block left-panel-user %}
 {% if user.permissions.create_post %}
 <div class="list-group">
-    <a href="#" id="item-create-post" class="list-group-item">Create Post</a>
+    <a href="/create_post" id="item-create-post" class="list-group-item">Create Post</a>
 </div>
 <hr>
 {% end %}

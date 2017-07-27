@@ -84,15 +84,17 @@
     {% end %}
 </div>
 <footer>
-    <script src="{{ static_url('libs/jquery-dist/jquery.min.js') }}"></script>
+    <script src="{{ static_url('libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ static_url('libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ static_url('libs/jquery-validation/dist/jquery.validate.js') }}"></script>
+    <script src="{{ static_url('libs/js-cookie/src/js.cookie.js') }}"></script>
     <script src="{{ static_url('js/ugc.js') }}"></script>
+    {% block includes %}{% end %}
     <script src="{{ static_url('js/' + template + '.js') }}"></script>
     <script>
-        ugc.navSelector('#{% block nav %}{% end %}');
+        ugc.navSelector('{% block nav %}{% end %}');
     </script>
-    {% block includes %}{% end %}
+    {% block post_includes %}{% end %}
 </footer>
 </body>
 </html>
