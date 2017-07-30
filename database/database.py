@@ -7,6 +7,7 @@ from decimal import Decimal
 from .permission import PermissionQuery
 from .user import UserQuery
 from .post import PostQuery
+from .group import GroupQuery
 
 
 class Database:
@@ -21,6 +22,7 @@ class Database:
         self.permission = PermissionQuery(self)
         self.user = UserQuery(self)
         self.post = PostQuery(self)
+        self.group = GroupQuery(self)
 
     def connect(self):
         return self.pool.connect()

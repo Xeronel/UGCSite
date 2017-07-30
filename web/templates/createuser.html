@@ -26,7 +26,17 @@
             <label for="verify_password">Verify Password:</label>
             <input class="form-control" name="verify_password" id="verify_password" type="password" required>
         </div>
-        <button class="btn btn-primary pull-right clearfix" type="submit">Create User</button>
+        <div class="form-group">
+            <label>Groups:</label>
+            <div class="outline">
+                {% for g in groups %}
+                <label class="permission">
+                    <input type="checkbox" name="permission-{{ g.name }}" value="true"> {{ g.name }}
+                </label>
+                {% end %}
+            </div>
+        </div>
+        <button class="btn btn-primary pull-right clearfix">Create User</button>
     </form>
 </div>
 {% end %}

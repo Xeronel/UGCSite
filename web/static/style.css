@@ -168,3 +168,16 @@ h4 {
         width: 100%;
     }
 }
+
+.outline {
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.permission {
+    width: 100%;
+    margin: 0;
+}

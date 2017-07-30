@@ -12,6 +12,15 @@ class Permission:
         self.ts3_panel = permissions.get('ts3_panel', False)
         self.csgo_panel = permissions.get('csgo_panel', False)
 
+    def __iter__(self):
+        return self.__dict__.__iter__()
+
+    def items(self):
+        return self.__dict__.items()
+
+    def values(self):
+        return self.__dict__.values()
+
 
 class PermissionQuery(Query):
     @gen.coroutine
