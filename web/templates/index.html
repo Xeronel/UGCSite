@@ -12,7 +12,10 @@
     <div class="post-footer">
         <div class="pull-right">
             {% if user.permissions.create_post %}
-            <a href="#" onclick="delete_post({{ post.id }})">Delete Post</a>
+            <form id="{{ post.id }}">
+                {% module xsrf_form_html() %}
+                <a href="#" onclick="delete_post({{ post.id }})">Delete Post</a>
+            </form>
             {% end %}
             <span>{{ 'By %s, %s' % (post.created_by, post.created_on.strftime('%Y-%m-%d')) }} </span>
         </div>
