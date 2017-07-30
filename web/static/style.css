@@ -136,8 +136,11 @@ h4 {
 }
 
 .post-footer a {
-    display: block;
     font-size: 0.9em;
+    text-align: right;
+}
+
+.post-footer form {
     text-align: right;
 }
 

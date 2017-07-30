@@ -2,23 +2,23 @@
 
 {% block content %}
 <div class="bubble clearfix">
-    <h4>Create Post</h4>
+    <h4>Edit Post</h4>
     {% module Alert() %}
-    <form id="create-post-form" method="post">
+    <form id="edit-post-form" method="post">
         {% module xsrf_form_html() %}
         <div class="form-group">
 
         </div>
         <div class="form-group">
             <div class="pull-right"><label for="pinned">
-                <input type="checkbox" name="pinned" id="pinned"> Pinned
+                <input type="checkbox" name="pinned" id="pinned" {% if post.pinned %}checked{% end %}> Pinned
             </label></div>
             <label for="title">Title:</label>
-            <input class="form-control" name="title" id="title" required>
+            <input class="form-control" name="title" id="title" value="{{ post.title }}" required>
         </div>
         <label for="body">Body:</label>
-        <textarea name="body" id="body"></textarea>
-        <button class="btn btn-primary pull-right clearfix">Create Post</button>
+        <textarea name="body" id="body">{{ post.body }}</textarea>
+        <button class="btn btn-primary pull-right clearfix">Edit Post</button>
     </form>
 </div>
 {% end %}

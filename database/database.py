@@ -42,7 +42,7 @@ class Database:
             result = []
             for value in data:
                 if cls is not None:
-                    result.append(cls(self.parse_result(value, description, convert_decimal, convert_date, cls)))
+                    result.append(self.parse_result(value, description, convert_decimal, convert_date, cls))
                 else:
                     result.append(self.parse_result(value, description, convert_decimal, convert_date, cls))
         elif type(data) == tuple:
@@ -55,6 +55,8 @@ class Database:
                 else:
                     value = data[i]
                 result[description[i].name] = value
+            if cls is not None:
+                result = cls(result)
         else:
             result = {}
         return result

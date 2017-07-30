@@ -13,6 +13,7 @@ def make_app():
          (r'/logout', Logout),
          (r'/create_user', CreateUser),
          (r'/create_post', CreatePost),
+         (r'/edit_post/(\d+)', EditPost),
          (r'/delete_post', DeletePost),
          (r'/image_upload', ImageUpload)],
         debug=config.debug,

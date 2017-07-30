@@ -28,6 +28,35 @@ class CreatePost(BaseHandler):
         self.finish('Created post: %s' % str(post_id))
 
 
+class EditPost(BaseHandler):
+    @permissions(['create_post'])
+    @authenticated
+    @gen.coroutine
+    def get(self, post_id, *args, **kwargs):
+        try:
+            post = yield self.db.post.get(int(post_id))
+            yield self.render('editpost.html', post=post)
+        except ValueError:
+            self.redirect('/')
+
+    @permissions(['create_post'])
+    @authenticated
+    @gen.coroutine
+    def post(self, post_id):
+        title = self.get_argument('title')
+        if title == '':
+            self.error(500, 'Title is required.')
+            return
+        body = self.get_argument('body')
+        if body == '':
+            self.error(500, 'Body is required.')
+            return
+        pinned = self.get_argument('pinned', False)
+        uid = self.get_current_user_id()
+        post_id = yield self.db.post.update(post_id, title, body, uid, pinned)
+        self.finish('Updated post: %s' % str(post_id))
+
+
 class DeletePost(BaseHandler):
     @permissions(['create_post'])
     @authenticated

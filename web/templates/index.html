@@ -14,7 +14,8 @@
             {% if user.permissions.create_post %}
             <form id="{{ post.id }}">
                 {% module xsrf_form_html() %}
-                <a href="#" onclick="delete_post({{ post.id }})">Delete Post</a>
+                <a href="/edit_post/{{ post.id }}">Edit</a> |
+                <a href="#" onclick="delete_post({{ post.id }})">Delete</a>
             </form>
             {% end %}
             <span>{{ 'By %s, %s' % (post.created_by, post.created_on.strftime('%Y-%m-%d')) }} </span>
